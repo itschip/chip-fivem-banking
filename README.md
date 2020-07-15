@@ -24,7 +24,7 @@ AUTO_INCREMENT=182
 # Description
 Here are some screenshots
 
-<img src="ban.png">
+<img src="ban2.png">
 <br>
 <img src="bank1.png">
 <br>
