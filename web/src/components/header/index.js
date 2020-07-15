@@ -15,24 +15,21 @@ const BankContainer = styled('div')`
   }
   font-family: Roboto;
 `;
-
-class HeaderComponent extends React.Component {  
-  closeBank = () => {
+ 
+function HeaderComponent({ header }) {  
+  const closeBank = () => {
     Nui.send('closeBank');
   };
 
-  render() {
-    const {header} = this.props;
     return (
       <BankContainer>
       <ul>
         {header.map(c => (
-          <Header key={c.id} {...c} onClose={this.closeBank}/>
+          <Header key={c.id} {...c} onClose={closeBank}/>
         ))}
       </ul>
       </BankContainer>  
     );
-  }
 }
 
 HeaderComponent.propTypes = {

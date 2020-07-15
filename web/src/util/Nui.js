@@ -5,7 +5,7 @@ export default {
     // /// #endif
 
     /* eslint-disable no-unreachable */
-    return fetch(`http://reactjs-ex/${event}`, {
+    return fetch(`http://chip-fivem-banking/${event}`, {
       method: 'post',
       headers: {
         'Content-type': 'application/json; charset=UTF-8',
