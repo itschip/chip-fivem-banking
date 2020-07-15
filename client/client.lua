@@ -122,6 +122,7 @@ RegisterNUICallback("depositAmount", function(data)
             }
         })
     end)
+    TriggerServerEvent("banking:getBankAmount")
 end)
 
 -- WITHDRAW
@@ -139,6 +140,7 @@ RegisterNUICallback("withdrawAmount", function(data)
             }
         })
     end)
+    TriggerServerEvent("banking:getBankAmount")
 end)
 
 -- TRANSFER

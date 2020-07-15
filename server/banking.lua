@@ -20,14 +20,16 @@ AddEventHandler("banking:deposit", function(depositAmount, depositDate)
     print(_depositAmount)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
+    local _identifier = xPlayer.getIdentifier()
     if _depositAmount == nil or _depositAmount <= 0 or _depositAmount > xPlayer.getMoney() then
         TriggerClientEvent("banking:send:alert", -1, "error", "Invalid deposit")
     else
         xPlayer.removeMoney(_depositAmount)
         xPlayer.addAccountMoney("bank", _depositAmount)
         TriggerClientEvent("banking:send:alert", -1, "success", "Deposit was successful")
-        MySQL.Async.execute("INSERT INTO transactions (`type`, `amount`, `date`) VALUES (@type, @amount, @date);", 
+        MySQL.Async.execute("INSERT INTO transactions (`identifier`, `type`, `amount`, `date`) VALUES (@identifier, @type, @amount, @date);", 
             {
+                identifier = _identifier,
                 type = "Deposit",
                 amount = _depositAmount,
                 date = depositDate
@@ -44,6 +46,7 @@ AddEventHandler("banking:withdraw", function(withdrawAmount, withdrawDate)
     print(_withdrawAmount)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
+    local _identifier = xPlayer.getIdentifier()
     base = xPlayer.getAccount('bank').money
     if _withdrawAmount == nil or _withdrawAmount <= 0 or _withdrawAmount > base then
         TriggerClientEvent("banking:send:alert", -1, "error", "Invalid withdraw")
@@ -51,8 +54,9 @@ AddEventHandler("banking:withdraw", function(withdrawAmount, withdrawDate)
         xPlayer.addMoney(_withdrawAmount)
         xPlayer.removeAccountMoney('bank', _withdrawAmount)
         TriggerClientEvent("banking:send:alert", -1, "success", "Withdraw was successful")
-        MySQL.Async.execute("INSERT INTO transactions (`type`, `amount`, `date`) VALUES (@type, @amount, @date);", 
+        MySQL.Async.execute("INSERT INTO transactions (`identifier`, `type`, `amount`, `date`) VALUES (@identifier, @type, @amount, @date);", 
             {
+                identifier = _identifier,
                 type = "Withdraw",
                 amount = _withdrawAmount,
                 date = withdrawDate
@@ -66,10 +70,11 @@ RegisterServerEvent("banking:transfer")
 AddEventHandler("banking:transfer", function(transferAmount, transferDate, transferName)
     local _source = source
     local xPlayer = ESX.GetPlayerFromId(_source)
+    local _identifier = xPlayer.getIdentifier()
     local target = ESX.GetPlayerFromId(transferName)
     if (target == nil or target == -1) then
         print("This is not a valid name")
-        TriggerClientEvent("banking:send:alert", _source, "error", "The name is invalid")
+        TriggerClientEvent("banking:send:alert", _source, "error", "The ID is invalid")
     else
         balance = xPlayer.getAccount('bank').money
         tbalance = target.getAccount('bank').money
@@ -84,9 +89,10 @@ AddEventHandler("banking:transfer", function(transferAmount, transferDate, trans
                 target.addAccountMoney('bank', tonumber(transferAmount))
                 local targetName = target.getName();
                 TriggerClientEvent("banking:send:alert", _source, "success", "Transfer successful to " .. targetName .. "")
-                MySQL.Async.execute("INSERT INTO transactions (`type`, `amount`, `date`) VALUES (@type, @amount, @date);", 
+                MySQL.Async.execute("INSERT INTO transactions (`identifier`, `type`, `amount`, `date`) VALUES (@identifier, @type, @amount, @date);", 
                     {
-                        type = "Transfer",
+                        identifier = _identifier,
+                        type = "Transfer to " .. targetName .. "",
                         amount = transferAmount,
                         date = transferDate
             
@@ -99,7 +105,14 @@ AddEventHandler("banking:transfer", function(transferAmount, transferDate, trans
 end)
 
 ESX.RegisterServerCallback('banking:get:transactions', function(source, cb)
-    MySQL.Async.fetchAll("SELECT * FROM transactions ORDER BY id DESC", {}, function(transactions)
+    local _source = source
+    local xPlayer = ESX.GetPlayerFromId(_source)
+    local _identifier = xPlayer.getIdentifier()
+
+    MySQL.Async.fetchAll("SELECT * FROM transactions WHERE identifier = @identifier ORDER BY id DESC" , 
+        {
+            ['@identifier'] = _identifier 
+        }, function(transactions)
         cb(transactions)
     end)
 end)
