@@ -8,6 +8,10 @@ Citizen.CreateThread(function()
 end)
 
 
+RegisterCommand("sayhi", function(source, args, rawCommand)
+    TriggerEvent("shitdog");
+end)
+
 
 Citizen.CreateThread(function()
     --Citizen.Wait(0)
@@ -18,7 +22,7 @@ Citizen.CreateThread(function()
         local scale = (1 / distance) * 2
         local fov = (1 / GetGameplayCamFov()) * 100
         local scale = scale * fov
-        if onScreen  then --and ESX.PlayerData.job.name ~= "police" 
+        if onScreen  then
             SetTextScale(0.35, 0.35)
             SetTextFont(4)
             SetTextProportional(1)

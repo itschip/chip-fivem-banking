@@ -55,9 +55,6 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-function createData(type, amount, date) {
-  return { type, amount, date };
-}
 
 
 function Transactions({ transactions }) {

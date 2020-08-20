@@ -1,5 +1,7 @@
 import React, { useState } from "react";
 
+import { connect } from 'react-redux';
+
 import { ChildScreen } from "../screen/screen";
 import Nui from "../../util/Nui";
 import Typography from '@material-ui/core/Typography';
@@ -11,6 +13,10 @@ import Paper from '@material-ui/core/Paper';
 import moment from "moment";
 import { TextInput } from "../ui/ui";
 
+import Alert from '@material-ui/lab/Alert';
+import CloseIcon from '@material-ui/icons/Close';
+import IconButton from '@material-ui/core/IconButton';
+import Collapse from '@material-ui/core/Collapse';
 
 const useStyles = makeStyles(theme => ({
     paper: {
@@ -25,12 +31,27 @@ const useStyles = makeStyles(theme => ({
       float: 'right',
       marginLeft: 20,
     },
+    root: {
+        width: '100%',
+        '& > * + *': {
+          marginTop: theme.spacing(2),
+        }
+      },
+      alert: {
+        width: "40%",
+        left: "50%",
+        transform: "translate(-50%, 30%)",
+        margin: "auto",
+        position: "absolute",
+        zIndex: 2000,
+      }
   }));
 
-export default function Transfer() {
-
+function Transfer({ message, alert }) {
+    const classes = useStyles();
     const [value, setValue] = useState("");
     const [name, setName] = useState("");
+    const [open, setOpen] = useState(false);
     
     const handleTransfer = (e) => {
         console.log("Value " + value)
@@ -41,14 +62,43 @@ export default function Transfer() {
             name,
             date
         });
+        setOpen(true)
     }
+
+    const AlertMessage = () => {
+        return (
+          <div className={classes.root}>
+          <Collapse in={open}>
+          <Alert 
+            action={
+              <IconButton
+                aria-label="close"
+                color="inherit"
+                size="small"
+                onClick={() => {
+                  setOpen(false)
+                }}
+                
+              >
+                <CloseIcon fontSize="inherit" />
+              </IconButton>
+            }
+            variant="filled" 
+            severity={alert} 
+            className={classes.alert}
+          >
+            {message}
+          </Alert>
+          </Collapse>
+        </div>
+        )
+      }
 
     const date = moment().format('DD.MM.YYYY');
 
-    const classes = useStyles();
-
     return (
         <ChildScreen>
+            <AlertMessage />
             <NavButton link={"/"} className={classes.back}>
                 <ChevronLeftIcon/>
                 Back
@@ -77,3 +127,7 @@ export default function Transfer() {
     )
 
 }
+
+const mapStateToProps = state => ({ message: state.functions.message, alert: state.functions.alert })
+
+export default connect(mapStateToProps)(Transfer);
