@@ -6,7 +6,8 @@ You will be able to deposit, withdraw and transfer. There is also a feat where y
 # Usage
 cd into the web folder and type ``npm install`` in the terminal to install ``node_modules``. You'll need Node.js, which you can download here. https://nodejs.org/en/ . Choose the current version.
 Ïf you want to change the resource name, first direct into the ``Nui.js`` file after you install node_modules. 
-Then do ``npm run build`` in the terminal, again, inside the web folder in the terminal. You may get some warning, but thats fine....unless you fucked up.
+
+When you have done all the changes you wanted, do ``npm run build`` in the terminal, again, inside the web folder in the terminal. You may get some warning, but thats fine....unless you fucked up.
 
 Add this query into your database your're using.
 ```
