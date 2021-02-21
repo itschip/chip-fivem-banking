@@ -7,18 +7,17 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/home/components/Home';
 
 function Bank() {
-
-  const currentTheme = useTheme()
+  const currentTheme = useTheme();
 
   return (
     <ThemeProvider theme={currentTheme}>
       <Container>
         <Router>
           <>
-          <Header />
-          <Switch>
-            <Route path='/' exact component={Home}/>
-          </Switch>
+            <Header />
+            <Switch>
+              <Route path="/" exact component={Home} />
+            </Switch>
           </>
         </Router>
       </Container>
