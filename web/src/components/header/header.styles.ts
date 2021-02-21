@@ -7,7 +7,7 @@ export const headerStyles = makeStyles((theme: Theme) => ({
   },
   details: {
     paddingTop: '12px',
-    paddingBottom: '12px'
+    paddingBottom: '12px',
   },
   items: {
     display: 'flex',
@@ -18,13 +18,13 @@ export const headerStyles = makeStyles((theme: Theme) => ({
     paddingTop: '0.5rem',
     paddingBottom: '0.5rem',
     transition: '.2s',
-    "&:hover": {
+    '&:hover': {
       background: '#eee',
-      color: '#232323'
-    }
+      color: '#232323',
+    },
   },
   itemText: {
     paddingLeft: '12px',
-    fontWeight: 500
-  }
-}))
+    fontWeight: 500,
+  },
+}));

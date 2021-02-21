@@ -1,6 +1,5 @@
 import { makeStyles, Theme } from '@material-ui/core/styles';
 
-
 export const containerStyles = makeStyles((theme: Theme) => ({
   root: {
     background: '#232323',
@@ -12,5 +11,5 @@ export const containerStyles = makeStyles((theme: Theme) => ({
     height: 700,
     display: 'grid',
     gridTemplateColumns: '250px 1fr',
-  }
-}))
+  },
+}));

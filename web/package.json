@@ -25,8 +25,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "test": "echo \"Hello, is this even working\" && exit 1"
   },
   "eslintConfig": {
     "extends": [
@@ -48,13 +48,17 @@
   },
   "devDependencies": {
     "@types/react-router-dom": "^5.1.7",
-    "husky": "^5.0.9",
+    "husky": "^5.1.0",
+    "lint-staged": "^10.5.4",
     "prettier": "2.2.1",
     "pretty-quick": "^3.1.0"
   },
   "husky": {
     "hooks": {
-      "pre-commit": "pretty-quick --staged"
+      "pre-commit": "lint-staged"
     }
+  },
+  "lint-staged": {
+    "*.{js,ts,tsx,css,md}": "prettier --write"
   }
 }
