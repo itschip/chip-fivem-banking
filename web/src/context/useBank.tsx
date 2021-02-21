@@ -37,8 +37,8 @@ export const useVisibility = () => {
 }
 
 export const useCredentials = () => {
-  const { credentials, setCredentials } = useContext(BankContext)
-  return { credentials, setCredentials }
+  const { credentials } = useContext(BankContext)
+  return { credentials }
 }
 
 export const useTransactions = () => {
