@@ -1,6 +1,6 @@
 import { useContext, createContext, useState } from "react"
 
-export interface IBankVisibility {
+export interface IBankContext {
   visibility: boolean;
   setVisibility: (show: boolean) => void;
   credentials: string;
@@ -9,7 +9,7 @@ export interface IBankVisibility {
   setTransactions: (transactions: string[]) => void;
 }
 
-const BankContext = createContext<IBankVisibility>(null);
+const BankContext = createContext<IBankContext>(null);
 
 
 export default function BankProvider({ children }: any) {
