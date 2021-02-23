@@ -2,7 +2,7 @@ fx_version "adamant"
 game "gta5"
 
 client_script {
-    "client/client.lua",
+    "client/client.js",
     "config.lua"
 }
 
@@ -11,9 +11,9 @@ server_script {
     "server/banking.lua"
 }
 
-ui_page "web/html/index.html"
+ui_page "html/index.html"
 
 files {
-    "web/html/index.html",
-    "web/html/main.js"
+    "html/index.html",
+    "html/*.js"
 }

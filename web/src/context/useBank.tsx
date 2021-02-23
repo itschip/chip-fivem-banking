@@ -1,4 +1,5 @@
 import { useContext, createContext, useState } from 'react';
+import { useNuiEvent } from '../utils/hooks/useNuiEvent';
 
 export interface IBankContext {
   visibility: boolean;
@@ -12,9 +13,14 @@ export interface IBankContext {
 const BankContext = createContext<IBankContext>(null);
 
 export default function BankProvider({ children }: any) {
-  const [visibility, setVisibility] = useState<boolean>(false);
-  const [credentials, setCredentials] = useState<string>(null);
-  const [transactions, setTransactions] = useState<string[]>(null);
+
+  const [visibility, setVisibility] = useState(false);
+  const [credentials, setCredentials] = useState(null);
+  const [transactions, setTransactions] = useState(null);
+
+  useNuiEvent('NBWD', 'setVisibility', setVisibility);
+  useNuiEvent('NBWD', 'setCredentials', setCredentials);
+  useNuiEvent('NBWD', 'setTransactions', setTransactions);
 
   const value = {
     visibility,
@@ -39,6 +45,6 @@ export const useCredentials = () => {
 };
 
 export const useTransactions = () => {
-  const { transactions, setTransactions } = useContext(BankContext);
-  return { transactions, setTransactions };
+  const { transactions } = useContext(BankContext);
+  return { transactions };
 };
