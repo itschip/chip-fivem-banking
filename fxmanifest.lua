@@ -2,8 +2,7 @@ fx_version "adamant"
 game "gta5"
 
 client_script {
-    "client/client.js",
-    "config.lua"
+    "client/client.js"
 }
 
 server_script {
