@@ -24,16 +24,3 @@ ENGINE=InnoDB
 AUTO_INCREMENT=182
 ;
 ```
-
-# Description
-Here are some screenshots
-
-<img src="ban2.png">
-<br>
-<img src="bank1.png">
-<br>
-<img src="bank33.png">
-<br>
-<img src="trans.png">
-<br>
-<img src="transactions.png">
