@@ -1,22 +1,49 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
+import { eventNameFactory } from '../nui/nuiUtils';
+interface IOptions {
+  capture?: boolean;
+  passive?: boolean;
+  once?: boolean;
+}
 
-export const useNuiEvent = (app: string, method: string, handler: Function) => {
+/**
+ * A hook that manage events listeners for receiving data from the NUI
+ * @param app The app name in which this hoook is used
+ * @param method The specific `method` field that should be listened for.
+ * @param handler The callback function that will handle data relayed by this hook
+ * @param options Any options to pass to the addEventListener
+ **/
+
+const defaultOptions = {};
+
+export const useNuiEvent = <S = Record<string, unknown>>(
+  app: string,
+  method: string,
+  handler: Function,
+  currentState?: S,
+  options: IOptions = defaultOptions,
+) => {
   const savedHandler: MutableRefObject<any> = useRef();
 
+  // When handler value changes set mutable ref to handler val
   useEffect(() => {
     savedHandler.current = handler;
   }, [handler]);
 
+  // Will run every rerender
   useEffect(() => {
-    const eventName = `${app}:${method}`;
+    const eventName = eventNameFactory(app, method);
     const eventListener = (event: any) => {
-      const { data } = event;
-      console.log(`NUI EVENT: ${eventName} | DATA: ${event.data}`);
-      savedHandler.current(data);
+      if (savedHandler.current && savedHandler.current.call) {
+        const { data } = event;
+        console.log(eventName, data);
+        const newData = currentState ? { ...currentState, ...data } : data;
+        savedHandler.current(newData);
+      }
     };
 
-    window.addEventListener(eventName, eventListener);
-
-    return () => window.removeEventListener(eventName, eventListener);
-  }, [app, method]);
+    window.addEventListener(eventName, eventListener, options);
+    // Remove Event Listener on component cleanup
+    return () => window.removeEventListener(eventName, eventListener, options);
+  }, [app, method, currentState, options]);
 };
