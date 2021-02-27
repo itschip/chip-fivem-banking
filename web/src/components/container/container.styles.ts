@@ -9,7 +9,5 @@ export const containerStyles = makeStyles((theme: Theme) => ({
     transform: 'translate(-50%, -50%)',
     width: 1200,
     height: 700,
-    display: 'grid',
-    gridTemplateColumns: '250px 1fr',
   },
 }));
