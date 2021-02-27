@@ -1,31 +1,42 @@
 import React from 'react';
 import Container from './components/container/Container';
-import { ThemeProvider } from '@material-ui/core';
+import { Modal, ThemeProvider } from '@material-ui/core';
 import { useTheme } from './theme/useTheme';
-import Header from './components/header/Header';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/home/components/Home';
-import { useVisibility } from './context/useBank';
+import { useBankContext } from './context/BankProvider';
 
 function Bank() {
   const currentTheme = useTheme();
+  const { visibility } = useBankContext();
 
-  const { visibility } = useVisibility()
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        data: {
+          app: 'NBWD',
+          method: 'setVisibility',
+          data: true,
+        },
+      }),
+    );
+  }, 1000);
 
   return (
     <ThemeProvider theme={currentTheme}>
-      {visibility ? (
-      <Container>
-        <Router>
-          <>
-            <Header />
-            <Switch>
-              <Route path="/" exact component={Home} />
-            </Switch>
-          </>
-        </Router>
-      </Container>
-      ) : null}
+      <div>
+        {visibility ? (
+          <Container>
+            <Router>
+              <>
+                <Switch>
+                  <Route path="/" exact component={Home} />
+                </Switch>
+              </>
+            </Router>
+          </Container>
+        ) : null}
+      </div>
     </ThemeProvider>
   );
 }

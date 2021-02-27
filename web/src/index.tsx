@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import Bank from './Bank';
 import reportWebVitals from './reportWebVitals';
-import BankProvider from './context/useBank';
+import BankProvider from './context/BankProvider';
 
 ReactDOM.render(
   <React.StrictMode>
@@ -11,7 +11,7 @@ ReactDOM.render(
       <Bank />
     </BankProvider>
   </React.StrictMode>,
-  document.getElementById('root')
+  document.getElementById('root'),
 );
 
 // If you want to start measuring performance in your app, pass a function
