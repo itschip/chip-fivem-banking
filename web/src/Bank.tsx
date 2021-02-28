@@ -1,14 +1,18 @@
 import React from 'react';
 import Container from './components/container/Container';
-import { Modal, ThemeProvider } from '@material-ui/core';
+import { ThemeProvider } from '@material-ui/core';
 import { useTheme } from './theme/useTheme';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/home/components/Home';
-import { useBankContext } from './context/BankProvider';
+
+// nui stuff
+import { useVisibility } from './context/BankProvider';
+import { useNuiService } from './utils/hooks/useNuiService';
 
 function Bank() {
+  useNuiService();
   const currentTheme = useTheme();
-  const { visibility } = useBankContext();
+  const { visibility } = useVisibility();
 
   setTimeout(() => {
     window.dispatchEvent(

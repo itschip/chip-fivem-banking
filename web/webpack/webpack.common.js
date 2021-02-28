@@ -24,15 +24,6 @@ module.exports = (options) => ({
         exclude: /node_modules/,
       },
       {
-        test: /\.jsx?$/,
-        use: [
-          {
-            loader: 'babel-loader',
-          }
-        ],
-        exclude: /node_modules/
-      },
-      {
         test: /\.css$/,
         exclude: /node_modules/,
         use: ['style-loader', 'css-loader']
