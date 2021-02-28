@@ -1,5 +1,6 @@
 import { useContext, createContext, useState } from 'react';
 import { useNuiEvent } from '../utils/hooks/useNuiEvent';
+import Bank from '../Bank';
 
 export interface IBankContext {
   visibility: boolean;
@@ -8,14 +9,12 @@ export interface IBankContext {
   setCredentials: (creds: string) => void;
   transactions: string[];
   setTransactions: (transactions: string[]) => void;
-  modal: boolean;
-  setModal: (show: boolean) => void;
 }
 
 const BankContext = createContext<IBankContext>(undefined);
 
 export default function BankProvider({ children }: any) {
-  const [visibility, setVisibility] = useState(true);
+  const [visibility, setVisibility] = useState(false);
   const [credentials, setCredentials] = useState(null);
   const [transactions, setTransactions] = useState(null);
   const [modal, setModal] = useState(false);
@@ -31,14 +30,22 @@ export default function BankProvider({ children }: any) {
     setCredentials,
     transactions,
     setTransactions,
-    modal,
-    setModal,
   };
 
   return <BankContext.Provider value={value}>{children}</BankContext.Provider>;
 }
 
-export const useBankContext = () => {
-  const value = useContext(BankContext);
-  return value;
+export const useVisibility = () => {
+  const { visibility, setVisibility } = useContext(BankContext);
+  return { visibility, setVisibility };
+};
+
+export const useCredentials = () => {
+  const { credentials, setCredentials } = useContext(BankContext);
+  return { credentials, setCredentials };
+};
+
+export const useTransactions = () => {
+  const { transactions, setTransactions } = useContext(BankContext);
+  return { transactions, setTransactions };
 };
