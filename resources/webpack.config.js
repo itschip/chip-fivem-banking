@@ -1,16 +1,16 @@
-const path = require("path");
-const webpack = require("webpack");
-const RemovePlugin = require("remove-files-webpack-plugin");
+const path = require('path');
+const webpack = require('webpack');
+const RemovePlugin = require('remove-files-webpack-plugin');
 
-const buildPath = path.resolve(__dirname, "dist");
+const buildPath = path.resolve(__dirname, 'dist');
 
 const client = {
-  entry: "client/client.ts",
+  entry: 'client/client.ts',
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
@@ -18,35 +18,35 @@ const client = {
   plugins: [
     new RemovePlugin({
       before: {
-        include: [path.resolve(buildPath, "client")],
+        include: [path.resolve(buildPath, 'client')],
       },
       watch: {
-        include: [path.resolve(buildPath, "client")],
+        include: [path.resolve(buildPath, 'client')],
       },
     }),
   ],
 };
 
 const server = {
-  entry: "server/server.ts",
+  entry: 'server/server.ts',
 
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
     ],
   },
   plugins: [
-    new webpack.DefinePlugin({ "global.GENTLY": false }),
+    new webpack.DefinePlugin({ 'global.GENTLY': false }),
     new RemovePlugin({
       before: {
-        include: [path.resolve(buildPath, "server")],
+        include: [path.resolve(buildPath, 'server')],
       },
       watch: {
-        include: [path.resolve(buildPath, "server")],
+        include: [path.resolve(buildPath, 'server')],
       },
     }),
   ],
@@ -54,11 +54,13 @@ const server = {
     minimize: true,
   },
   resolve: {
-    extensions: ["*.ts", "*.tsx", "*.js"],
+    extensions: ['*.ts', '*.tsx', '*.js'],
   },
   output: {
-    filename: "[cotenthash].server.js",
-    path: path.resolve(buildPath, "server"),
+    filename: '[cotenthash].server.js',
+    path: path.resolve(buildPath, 'server'),
   },
-  target: "node",
+  target: 'node',
 };
+
+module.exports = [client, server];

@@ -1,1 +1,0 @@
-RegisterCommand('heelo', () => {}, false);
