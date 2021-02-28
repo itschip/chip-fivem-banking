@@ -1,11 +1,11 @@
 import { MutableRefObject, useEffect, useRef } from 'react';
 import { eventNameFactory } from '../nui/nuiUtils';
+
 interface IOptions {
   capture?: boolean;
   passive?: boolean;
   once?: boolean;
 }
-
 /**
  * A hook that manage events listeners for receiving data from the NUI
  * @param app The app name in which this hoook is used
@@ -16,14 +16,14 @@ interface IOptions {
 
 const defaultOptions = {};
 
-export const useNuiEvent = <S = Record<string, unknown>>(
+export const useNuiEvent = (
   app: string,
   method: string,
   handler: Function,
-  currentState?: S,
   options: IOptions = defaultOptions,
 ) => {
   const savedHandler: MutableRefObject<any> = useRef();
+  const { capture, passive, once } = options;
 
   // When handler value changes set mutable ref to handler val
   useEffect(() => {
@@ -37,13 +37,13 @@ export const useNuiEvent = <S = Record<string, unknown>>(
       if (savedHandler.current && savedHandler.current.call) {
         const { data } = event;
         console.log(eventName, data);
-        const newData = currentState ? { ...currentState, ...data } : data;
-        savedHandler.current(newData);
+        savedHandler.current(data);
       }
     };
 
-    window.addEventListener(eventName, eventListener, options);
+    const opts = { capture, passive, once };
+    window.addEventListener(eventName, eventListener, opts);
     // Remove Event Listener on component cleanup
-    return () => window.removeEventListener(eventName, eventListener, options);
-  }, [app, method, currentState, options]);
+    return () => window.removeEventListener(eventName, eventListener, opts);
+  }, [app, method, capture, passive, once]);
 };
