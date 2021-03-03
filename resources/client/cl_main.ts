@@ -1,6 +1,7 @@
 import { sendMessage } from '../utils/fivem';
 import events from '../utils/events';
-import { Deposit } from '../../web/src/types/actions';
+import { Deposit, Withdraw } from '../../web/src/types/actions';
+import { Transactions } from '../../web/src/types/transactions';
 
 RegisterCommand(
   'openbank',
@@ -19,7 +20,16 @@ RegisterCommand(
   false,
 );
 
-RegisterNuiCallbackType(events.BANK_DEPOSIT_MONEY);
-on(`__cfx_nui:${events.BANK_DEPOSIT_MONEY}`, (data: Deposit) => {
-  emitNet(events.BANK_DEPOSIT_MONEY, data);
+RegisterNuiCallbackType(events.BANK_CREATE_DEPOSIT);
+on(`__cfx_nui:${events.BANK_CREATE_DEPOSIT}`, (data: Deposit) => {
+  emitNet(events.BANK_CREATE_DEPOSIT, data);
+});
+
+RegisterNuiCallbackType(events.BANK_CREATE_WITHDRAW);
+on(`__cfx_nui:${events.BANK_CREATE_WITHDRAW}`, (data: Withdraw) => {
+  emitNet(events.BANK_CREATE_WITHDRAW, data);
+});
+
+onNet(events.BANK_SEND_TRANSACTIONS, (transactions: Transactions[]) => {
+  sendMessage('setTransactions', transactions);
 });

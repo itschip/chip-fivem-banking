@@ -1,9 +1,15 @@
 import { promisePool } from './db';
 import events from '../utils/events';
 import { ESX } from './server';
-import { getSource, createDeposit, getIdentifier } from './functions';
-import { Deposit } from '../../web/src/types/actions';
+import {
+  getSource,
+  createDeposit,
+  getIdentifier,
+  createWithdraw,
+} from './functions';
+import { Deposit, Withdraw } from '../../web/src/types/actions';
 import { Credentials } from '../../web/src/types/credentials';
+import { Transactions } from '../../web/src/types/transactions';
 
 async function getCredentials(identifier: string): Promise<Credentials> {
   // This is currently targeting the ESX identity setup.
@@ -22,7 +28,34 @@ async function getCredentials(identifier: string): Promise<Credentials> {
   };
 }
 
-onNet(events.BANK_DEPOSIT_MONEY, (deposit: Deposit) => {
+async function getTransactions(identifier: string): Promise<Transactions[]> {
+  const query = `SELECT * FROM nbwd_bank_transactions WHERE identifier = ? ORDER by DESC`;
+
+  const [results] = await promisePool.query(query, [identifier]);
+  return <Transactions[]>results;
+}
+
+onNet(events.BANK_GET_CREDENTIALS, async () => {
+  const pSource = getSource();
+  try {
+    const identifier = getIdentifier(pSource);
+    const credentials = await getCredentials(identifier);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+onNet(events.BANK_GET_TRANSACTIONS, async () => {
+  const pSource = getSource();
+  try {
+    const identifier = getIdentifier(pSource);
+    const transactions = await getTransactions(identifier);
+  } catch (error) {
+    console.log(error);
+  }
+});
+
+onNet(events.BANK_CREATE_DEPOSIT, (deposit: Deposit) => {
   const pSource = getSource();
   try {
     createDeposit(pSource, deposit.amount);
@@ -31,11 +64,10 @@ onNet(events.BANK_DEPOSIT_MONEY, (deposit: Deposit) => {
   }
 });
 
-onNet(events.BANK_GET_CREDENTIALS, async () => {
+onNet(events.BANK_CREATE_WITHDRAW, (withdraw: Withdraw) => {
   const pSource = getSource();
   try {
-    const identifier = getIdentifier(pSource);
-    const credentials = await getCredentials(identifier);
+    createWithdraw(pSource, withdraw.amount);
   } catch (error) {
     console.log(error);
   }
