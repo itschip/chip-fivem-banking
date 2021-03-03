@@ -16,6 +16,7 @@
     "webpack-cli": "^4.5.0"
   },
   "dependencies": {
-    "esx.js": "^1.1.7"
+    "esx.js": "^1.1.7",
+    "mysql2": "^2.2.5"
   }
 }
