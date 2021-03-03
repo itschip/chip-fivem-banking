@@ -11,10 +11,12 @@ export default function BankProvider({ children }: any) {
   const [depositModal, setDepositModal] = useState(false);
   const [withdrawModal, setWithdrawModal] = useState(false);
   const [transferModal, setTransferModal] = useState(false);
+  const [notification, setNotification] = useState(null);
 
   useNuiEvent('NBWD', 'setVisibility', setVisibility);
   useNuiEvent('NBWD', 'setCredentials', setCredentials);
   useNuiEvent('NBWD', 'setTransactions', setTransactions);
+  useNuiEvent('NBWD', 'setNotification', setNotification);
 
   const value = {
     visibility,
@@ -29,6 +31,8 @@ export default function BankProvider({ children }: any) {
     setWithdrawModal,
     transferModal,
     setTransferModal,
+    notification,
+    setNotification,
   };
 
   return <BankContext.Provider value={value}>{children}</BankContext.Provider>;
@@ -62,4 +66,9 @@ export const useWithdrawModal = () => {
 export const useTransferModal = () => {
   const { transferModal, setTransferModal } = useContext(BankContext);
   return { transferModal, setTransferModal };
+};
+
+export const useNotification = () => {
+  const { notification, setNotification } = useContext(BankContext);
+  return { notification, setNotification };
 };

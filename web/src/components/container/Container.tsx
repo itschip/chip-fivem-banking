@@ -1,4 +1,6 @@
-import React from 'react';
+import { useSnackbar } from 'notistack';
+import React, { useEffect } from 'react';
+import { useNotification } from '../../context/BankProvider';
 import { containerStyles } from './container.styles';
 
 type ContainerProps = {

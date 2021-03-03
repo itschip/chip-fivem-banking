@@ -4,11 +4,23 @@ import './index.css';
 import Bank from './Bank';
 import reportWebVitals from './reportWebVitals';
 import BankProvider from './context/BankProvider';
+import { SnackbarProvider } from 'notistack';
 
 ReactDOM.render(
   <React.StrictMode>
     <BankProvider>
-      <Bank />
+      <SnackbarProvider
+        maxSnack={3}
+        autoHideDuration={2000}
+        iconVariant={{
+          success: '😎',
+          error: '😫',
+          info: '😮',
+          warning: '😱',
+        }}
+      >
+        <Bank />
+      </SnackbarProvider>
     </BankProvider>
   </React.StrictMode>,
   document.getElementById('root'),

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Container from './components/container/Container';
 import { ThemeProvider } from '@material-ui/core';
 import { useTheme } from './theme/useTheme';
@@ -8,7 +8,7 @@ import Home from './components/home/components/Home';
 // nui stuff
 import { useVisibility } from './context/BankProvider';
 import { useNuiService } from './utils/hooks/useNuiService';
-import { useNuiEvent } from './utils/hooks/useNuiEvent';
+import { Modal } from './components/ui/Modal';
 
 function Bank() {
   useNuiService();
@@ -50,7 +50,7 @@ function Bank() {
         },
       }),
     );
-  });
+  }, 1000);
 
   return (
     <ThemeProvider theme={currentTheme}>
@@ -60,7 +60,7 @@ function Bank() {
             <Router>
               <>
                 <Switch>
-                  <Route path="/" exact component={Home} />
+                  <Route path='/' exact component={Home} />
                 </Switch>
               </>
             </Router>

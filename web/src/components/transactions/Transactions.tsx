@@ -7,10 +7,6 @@ export default function Transactions() {
 
   const { transactions } = useTransactions();
 
-  const handleOpen = () => {
-    setOpen(!open);
-  };
-
   if (!transactions) {
     return <p>You don't seem to have any transactions yet!</p>;
   }
@@ -32,16 +28,6 @@ export default function Transactions() {
               />
               <ListItemText>{transaction.date}</ListItemText>
             </ListItem>
-            <Collapse in={true} timeout={'auto'} unmountOnExit={true}>
-              <List component={'div'} disablePadding={true}>
-                <ListItem>
-                  <ListItemText
-                    primary={transaction.type}
-                    secondary={transaction.id}
-                  />
-                </ListItem>
-              </List>
-            </Collapse>
           </List>
         </>
       ))}
