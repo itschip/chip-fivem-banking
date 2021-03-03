@@ -1,0 +1,1 @@
+RegisterCommand('openbank', () => {}, false);
