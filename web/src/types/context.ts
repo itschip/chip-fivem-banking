@@ -29,4 +29,6 @@ export interface IBankContext {
   setWithdrawModal: (show: boolean) => void;
   transferModal: boolean;
   setTransferModal: (show: boolean) => void;
+  notification: string;
+  setNotification: (message: string) => void;
 }
