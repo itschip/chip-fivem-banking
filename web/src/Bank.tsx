@@ -8,6 +8,7 @@ import Home from './components/home/components/Home';
 // nui stuff
 import { useVisibility } from './context/BankProvider';
 import { useNuiService } from './utils/hooks/useNuiService';
+import { useNuiEvent } from './utils/hooks/useNuiEvent';
 
 function Bank() {
   useNuiService();
@@ -25,6 +26,31 @@ function Bank() {
       }),
     );
   }, 1000);
+
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        data: {
+          app: 'NBWD',
+          method: 'setTransactions',
+          data: [
+            {
+              id: 1,
+              type: 'deposit',
+              amount: 200,
+              date: 'just now',
+            },
+            {
+              id: 2,
+              type: 'withdraw',
+              amount: 200,
+              date: 'just now',
+            },
+          ],
+        },
+      }),
+    );
+  });
 
   return (
     <ThemeProvider theme={currentTheme}>

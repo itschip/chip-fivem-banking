@@ -3,6 +3,9 @@ import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
 import Actions from '../../actions/Actions';
 import { Modal } from '../../ui/Modal';
+import { useTransactions } from '../../../context/BankProvider';
+import { transcode } from 'buffer';
+import Transactions from '../../transactions/Transactions';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -13,13 +16,15 @@ const useStyles = makeStyles((theme: Theme) =>
     },
     paper: {
       padding: theme.spacing(2),
-      height: '100%',
+      height: 'auto',
     },
   }),
 );
 
 function Home() {
   const classes = useStyles();
+
+  const { transactions } = useTransactions();
 
   return (
     <div className={classes.root}>
@@ -30,8 +35,13 @@ function Home() {
           </Paper>
         </Grid>
         <Grid item xs={8}>
-          <Paper className={classes.paper}>
+          <Paper className={classes.paper} style={{ marginBottom: 10 }}>
             <Actions />
+          </Paper>
+
+          <Paper className={classes.paper}>
+            <Typography variant="h6">Transactions</Typography>
+            <Transactions />
           </Paper>
         </Grid>
       </Grid>

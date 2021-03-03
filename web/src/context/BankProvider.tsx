@@ -1,15 +1,6 @@
 import { useContext, createContext, useState } from 'react';
 import { useNuiEvent } from '../utils/hooks/useNuiEvent';
-import Bank from '../Bank';
-
-export interface IBankContext {
-  visibility: boolean;
-  setVisibility: (show: boolean) => void;
-  credentials: string;
-  setCredentials: (creds: string) => void;
-  transactions: string[];
-  setTransactions: (transactions: string[]) => void;
-}
+import { IBankContext } from '../types/context';
 
 const BankContext = createContext<IBankContext>(undefined);
 
@@ -17,7 +8,9 @@ export default function BankProvider({ children }: any) {
   const [visibility, setVisibility] = useState(false);
   const [credentials, setCredentials] = useState(null);
   const [transactions, setTransactions] = useState(null);
-  const [modal, setModal] = useState(false);
+  const [depositModal, setDepositModal] = useState(false);
+  const [withdrawModal, setWithdrawModal] = useState(false);
+  const [transferModal, setTransferModal] = useState(false);
 
   useNuiEvent('NBWD', 'setVisibility', setVisibility);
   useNuiEvent('NBWD', 'setCredentials', setCredentials);
@@ -30,6 +23,12 @@ export default function BankProvider({ children }: any) {
     setCredentials,
     transactions,
     setTransactions,
+    depositModal,
+    setDepositModal,
+    withdrawModal,
+    setWithdrawModal,
+    transferModal,
+    setTransferModal,
   };
 
   return <BankContext.Provider value={value}>{children}</BankContext.Provider>;
@@ -48,4 +47,19 @@ export const useCredentials = () => {
 export const useTransactions = () => {
   const { transactions, setTransactions } = useContext(BankContext);
   return { transactions, setTransactions };
+};
+
+export const useDepositModal = () => {
+  const { depositModal, setDepositModal } = useContext(BankContext);
+  return { depositModal, setDepositModal };
+};
+
+export const useWithdrawModal = () => {
+  const { withdrawModal, setWithdrawModal } = useContext(BankContext);
+  return { withdrawModal, setWithdrawModal };
+};
+
+export const useTransferModal = () => {
+  const { transferModal, setTransferModal } = useContext(BankContext);
+  return { transferModal, setTransferModal };
 };

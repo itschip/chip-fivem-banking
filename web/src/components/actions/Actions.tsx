@@ -11,7 +11,6 @@ const useStyles = makeStyles((theme: Theme) => ({
 export default function Actions() {
   const classes = useStyles();
 
-
   return (
     <div>
       <Button className={classes.button} variant="contained" color="secondary">
