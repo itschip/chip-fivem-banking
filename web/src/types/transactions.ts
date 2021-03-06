@@ -1,6 +1,13 @@
 export interface Transactions {
-  type: string;
+  id: number;
+  type: TransactionType;
   amount: number;
   date: Date;
   comment: string;
+}
+
+enum TransactionType {
+  deposit,
+  withdraw,
+  transfer,
 }

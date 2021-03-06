@@ -2,12 +2,10 @@ import { Grid, Paper, Typography } from '@material-ui/core';
 import { makeStyles, createStyles, Theme } from '@material-ui/core/styles';
 import React from 'react';
 import Actions from '../../actions/Actions';
-import {
-  useTransactions,
-  useWithdrawModal,
-} from '../../../context/BankProvider';
+import { useWithdrawModal } from '../../../context/BankProvider';
 import Transactions from '../../transactions/Transactions';
 import WithdrawModal from './modal/WithdrawModal';
+import Accounts from '../../accounts/Accounts';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -35,8 +33,6 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function Home() {
   const classes = useStyles();
-
-  //const { transactions } = useTransactions();
   const { withdrawModal } = useWithdrawModal();
 
   return (
@@ -47,6 +43,7 @@ function Home() {
         <Grid item xs={3}>
           <Paper className={classes.paper}>
             <Typography variant='h6'>Accounts</Typography>
+            <Accounts />
           </Paper>
         </Grid>
         <Grid item xs={8}>

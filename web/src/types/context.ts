@@ -1,28 +1,12 @@
-interface ITransactions {
-  id: number;
-  type: TransactionType;
-  date: string;
-  amount: number;
-}
-
-interface ICredentials {
-  name: string;
-  balance: number;
-}
-
-enum TransactionType {
-  deposit,
-  withdraw,
-  transfer,
-}
+import { Transactions } from './transactions';
+import { Credentials } from './credentials';
+import { Accounts } from './accounts';
 
 export interface IBankContext {
   visibility: boolean;
   setVisibility: (show: boolean) => void;
-  credentials: ICredentials;
-  setCredentials: (creds: string) => void;
-  transactions: ITransactions[];
-  setTransactions: (transactions: string[]) => void;
+  credentials: Credentials;
+  transactions: Transactions[];
   depositModal: boolean;
   setDepositModal: (show: boolean) => void;
   withdrawModal: boolean;
@@ -31,4 +15,5 @@ export interface IBankContext {
   setTransferModal: (show: boolean) => void;
   notification: string;
   setNotification: (message: string) => void;
+  accounts: Accounts[];
 }

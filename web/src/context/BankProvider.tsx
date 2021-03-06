@@ -5,26 +5,26 @@ import { IBankContext } from '../types/context';
 const BankContext = createContext<IBankContext>(undefined);
 
 export default function BankProvider({ children }: any) {
-  const [visibility, setVisibility] = useState(false);
+  const [visibility, setVisibility] = useState<boolean>(false);
   const [credentials, setCredentials] = useState(null);
   const [transactions, setTransactions] = useState(null);
-  const [depositModal, setDepositModal] = useState(false);
-  const [withdrawModal, setWithdrawModal] = useState(false);
-  const [transferModal, setTransferModal] = useState(false);
+  const [depositModal, setDepositModal] = useState<boolean>(false);
+  const [withdrawModal, setWithdrawModal] = useState<boolean>(false);
+  const [transferModal, setTransferModal] = useState<boolean>(false);
   const [notification, setNotification] = useState(null);
+  const [accounts, setAccounts] = useState(null);
 
   useNuiEvent('NBWD', 'setVisibility', setVisibility);
   useNuiEvent('NBWD', 'setCredentials', setCredentials);
   useNuiEvent('NBWD', 'setTransactions', setTransactions);
   useNuiEvent('NBWD', 'setNotification', setNotification);
+  useNuiEvent('NBWD', 'setAccounts', setAccounts);
 
   const value = {
     visibility,
     setVisibility,
     credentials,
-    setCredentials,
     transactions,
-    setTransactions,
     depositModal,
     setDepositModal,
     withdrawModal,
@@ -33,6 +33,7 @@ export default function BankProvider({ children }: any) {
     setTransferModal,
     notification,
     setNotification,
+    accounts,
   };
 
   return <BankContext.Provider value={value}>{children}</BankContext.Provider>;
@@ -44,13 +45,13 @@ export const useVisibility = () => {
 };
 
 export const useCredentials = () => {
-  const { credentials, setCredentials } = useContext(BankContext);
-  return { credentials, setCredentials };
+  const { credentials } = useContext(BankContext);
+  return { credentials };
 };
 
 export const useTransactions = () => {
-  const { transactions, setTransactions } = useContext(BankContext);
-  return { transactions, setTransactions };
+  const { transactions } = useContext(BankContext);
+  return { transactions };
 };
 
 export const useDepositModal = () => {
@@ -71,4 +72,9 @@ export const useTransferModal = () => {
 export const useNotification = () => {
   const { notification, setNotification } = useContext(BankContext);
   return { notification, setNotification };
+};
+
+export const useAccounts = () => {
+  const { accounts } = useContext(BankContext);
+  return { accounts };
 };

@@ -52,6 +52,29 @@ function Bank() {
     );
   }, 1000);
 
+  setTimeout(() => {
+    window.dispatchEvent(
+      new MessageEvent('message', {
+        data: {
+          app: 'NBWD',
+          method: 'setAccounts',
+          data: [
+            {
+              id: 1,
+              name: 'Personal',
+              balance: 30000,
+            },
+            {
+              id: 2,
+              name: 'Savings',
+              balance: 100000,
+            },
+          ],
+        },
+      }),
+    );
+  }, 1000);
+
   return (
     <ThemeProvider theme={currentTheme}>
       <div>
