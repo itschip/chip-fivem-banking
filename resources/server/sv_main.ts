@@ -13,16 +13,13 @@ import { Transactions } from '../../web/src/types/transactions';
 async function getCredentials(identifier: string): Promise<Credentials> {
   // This is currently targeting the ESX identity setup.
   // If you're using a different framework, this will need to be changed
-  const query = `SELECT firstname, lastname FROM users WHERE identifier = ?`;
-  const [result] = await promisePool.query(query, [identifier]);
-  const credentials = <Credentials[]>result;
+  const playerName = ESX.GetPlayerFromIdentifier(identifier).getName();
 
   const bankAmount = ESX.GetPlayerFromIdentifier(identifier).getAccount('bank')
     .money;
 
   return {
-    firstname: credentials[0].firstname,
-    lastname: credentials[0].lastname,
+    name: playerName,
     balance: bankAmount,
   };
 }

@@ -1,6 +1,7 @@
 export const Delay = (ms: number) => new Promise((res) => setTimeout(res, ms));
 
 export const sendMessage = (method: string, data = {}) => {
+  //@ts-ignore
   return SendNuiMessage(
     JSON.stringify({
       app: 'NBWD',
