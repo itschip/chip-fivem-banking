@@ -1,6 +1,6 @@
 import { promisePool } from './db';
-import events from '../utils/events';
 import { ESX } from './server';
+import events from '../utils/events';
 import {
   getSource,
   createDeposit,
@@ -10,10 +10,9 @@ import {
 import { Deposit, Withdraw } from '../../web/src/types/actions';
 import { Credentials } from '../../web/src/types/credentials';
 import { Transactions } from '../../web/src/types/transactions';
-
 async function getCredentials(identifier: string): Promise<Credentials> {
   // This is currently targeting the ESX identity setup.
-  // If you're using a different framework, this will most likely need to be changed
+  // If you're using a different framework, this will need to be changed
   const query = `SELECT firstname, lastname FROM users WHERE identifier = ?`;
   const [result] = await promisePool.query(query, [identifier]);
   const credentials = <Credentials[]>result;
@@ -24,7 +23,7 @@ async function getCredentials(identifier: string): Promise<Credentials> {
   return {
     firstname: credentials[0].firstname,
     lastname: credentials[0].lastname,
-    money: bankAmount,
+    balance: bankAmount,
   };
 }
 
