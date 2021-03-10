@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { TextField, Button } from '@material-ui/core';
+import { TextField, Button, Box } from '@material-ui/core';
 import { useWithdrawModal } from '../../../../context/BankProvider';
 import Nui from '../../../../utils/nui/Nui';
 import { Modal } from '../../../ui/Modal';
@@ -20,17 +20,30 @@ export default function WithdrawModal() {
 
   return (
     <Modal open={withdrawModal} handleClose={_handleClose}>
-      <div>
-        <TextField
-          value={amount}
-          placeholder='$'
-          type='number'
-          onChange={(e) => setAmount(e.currentTarget.value)}
-        />
-        <Button onClick={handleWithdraw} color='secondary' variant='contained'>
-          Withdraw
-        </Button>
-      </div>
+      <Box
+        flex
+        justifyContent='space-between'
+        alignItems='center'
+        textAlign='center'
+      >
+        <div>
+          <TextField
+            value={amount}
+            placeholder='$'
+            type='number'
+            onChange={(e) => setAmount(e.currentTarget.value)}
+          />
+        </div>
+        <div style={{ marginTop: 20 }}>
+          <Button
+            onClick={handleWithdraw}
+            color='secondary'
+            variant='contained'
+          >
+            Withdraw
+          </Button>
+        </div>
+      </Box>
     </Modal>
   );
 }

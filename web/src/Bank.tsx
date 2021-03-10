@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import Container from './components/container/Container';
 import { ThemeProvider } from '@material-ui/core';
 import { useTheme } from './theme/useTheme';
@@ -8,7 +8,6 @@ import Home from './components/home/components/Home';
 // nui stuff
 import { useVisibility } from './context/BankProvider';
 import { useNuiService } from './utils/hooks/useNuiService';
-import { Modal } from './components/ui/Modal';
 
 function Bank() {
   useNuiService();
@@ -22,54 +21,6 @@ function Bank() {
           app: 'NBWD',
           method: 'setVisibility',
           data: true,
-        },
-      }),
-    );
-  }, 1000);
-
-  setTimeout(() => {
-    window.dispatchEvent(
-      new MessageEvent('message', {
-        data: {
-          app: 'NBWD',
-          method: 'setTransactions',
-          data: [
-            {
-              id: 1,
-              type: 'deposit',
-              amount: 200,
-              date: 'just now',
-            },
-            {
-              id: 2,
-              type: 'withdraw',
-              amount: 200,
-              date: 'just now',
-            },
-          ],
-        },
-      }),
-    );
-  }, 1000);
-
-  setTimeout(() => {
-    window.dispatchEvent(
-      new MessageEvent('message', {
-        data: {
-          app: 'NBWD',
-          method: 'setAccounts',
-          data: [
-            {
-              id: 1,
-              name: 'Personal',
-              balance: 30000,
-            },
-            {
-              id: 2,
-              name: 'Savings',
-              balance: 100000,
-            },
-          ],
         },
       }),
     );
