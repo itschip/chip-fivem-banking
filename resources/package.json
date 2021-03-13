@@ -4,6 +4,10 @@
   "main": "index.js",
   "author": "Project Error",
   "license": "CC-BY-NC-SA-4.0",
+  "scripts": {
+    "build": "webpack --mode production --progress",
+    "watch": "webpack --mode development --watch"
+  },
   "devDependencies": {
     "@citizenfx/client": "^1.0.3573-1",
     "@citizenfx/server": "^1.0.3573-1",
