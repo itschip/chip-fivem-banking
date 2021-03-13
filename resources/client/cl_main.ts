@@ -20,15 +20,21 @@ RegisterCommand(
   false,
 );
 
-RegisterNuiCallbackType(events.BANK_CREATE_DEPOSIT);
-on(`__cfx_nui:${events.BANK_CREATE_DEPOSIT}`, (data: Deposit) => {
-  emitNet(events.BANK_CREATE_DEPOSIT, data);
-});
+RegisterRawNuiCallback(
+  events.BANK_CREATE_DEPOSIT,
+  (data: any, cb: Function) => {
+    const pData: Deposit = JSON.parse(data?.body);
+    emitNet(events.BANK_CREATE_DEPOSIT, pData);
+  },
+);
 
-RegisterNuiCallbackType(events.BANK_CREATE_WITHDRAW);
-on(`__cfx_nui:${events.BANK_CREATE_WITHDRAW}`, (data: Withdraw) => {
-  emitNet(events.BANK_CREATE_WITHDRAW, data);
-});
+RegisterRawNuiCallback(
+  events.BANK_CREATE_WITHDRAW,
+  (data: any, cb: Function) => {
+    const pData: Withdraw = JSON.parse(data?.body);
+    emitNet(events.BANK_CREATE_WITHDRAW, pData);
+  },
+);
 
 onNet(events.BANK_SEND_TRANSACTIONS, (transactions: Transactions[]) => {
   sendMessage('setTransactions', transactions);
