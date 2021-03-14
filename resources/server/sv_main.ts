@@ -11,7 +11,7 @@ import { Deposit, Withdraw } from '../../web/src/types/actions';
 import { Credentials } from '../../web/src/types/credentials';
 import { Transactions } from '../../web/src/types/transactions';
 async function getCredentials(identifier: string): Promise<Credentials> {
-  // This is currently targeting the ESX identity setup.
+  // This is currently targeting the ESX framework.
   // If you're using a different framework, this will need to be changed
   const playerName = ESX.GetPlayerFromIdentifier(identifier).getName();
 
@@ -36,6 +36,7 @@ onNet(events.BANK_GET_CREDENTIALS, async () => {
   try {
     const identifier = getIdentifier(pSource);
     const credentials = await getCredentials(identifier);
+    emitNet(events.BANK_SEND_CREDENTIALS, pSource, credentials);
   } catch (error) {
     console.log(error);
   }
@@ -46,6 +47,7 @@ onNet(events.BANK_GET_TRANSACTIONS, async () => {
   try {
     const identifier = getIdentifier(pSource);
     const transactions = await getTransactions(identifier);
+    emitNet(events.BANK_SEND_TRANSACTIONS, pSource, transactions);
   } catch (error) {
     console.log(error);
   }
