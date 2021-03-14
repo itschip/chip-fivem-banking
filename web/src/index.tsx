@@ -9,16 +9,7 @@ import { SnackbarProvider } from 'notistack';
 ReactDOM.render(
   <React.StrictMode>
     <BankProvider>
-      <SnackbarProvider
-        maxSnack={3}
-        autoHideDuration={2000}
-        iconVariant={{
-          success: '😎',
-          error: '😫',
-          info: '😮',
-          warning: '😱',
-        }}
-      >
+      <SnackbarProvider>
         <Bank />
       </SnackbarProvider>
     </BankProvider>
