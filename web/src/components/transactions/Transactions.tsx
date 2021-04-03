@@ -27,3 +27,22 @@ export default function Transactions() {
     </div>
   );
 }
+
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent('message', {
+      data: {
+        app: 'NBWD',
+        method: 'setTransactions',
+        data: [
+          {
+            id: 1,
+            type: 'Deposit',
+            amount: 3000,
+            date: '4/3/2021',
+          },
+        ],
+      },
+    }),
+  );
+}, 1000);

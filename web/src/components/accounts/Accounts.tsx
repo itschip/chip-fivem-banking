@@ -20,3 +20,20 @@ export default function Accounts() {
     </List>
   );
 }
+
+setTimeout(() => {
+  window.dispatchEvent(
+    new MessageEvent('message', {
+      data: {
+        app: 'NBWD',
+        method: 'setAccounts',
+        data: [
+          {
+            name: 'Chip',
+            balance: 3000,
+          },
+        ],
+      },
+    }),
+  );
+}, 1000);
