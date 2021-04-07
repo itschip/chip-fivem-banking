@@ -1,14 +1,16 @@
 import React from 'react';
-import Container from './components/container/Container';
+import Container from './components/Container/Container';
 import { ThemeProvider } from '@material-ui/core';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
-import Home from './components/home/components/Home';
-
+import Home from './components/Home/components/Home';
+import Header from './components/Header/Header';
 // nui stuff
 import { useVisibility } from './context/BankProvider';
+import { useTheme } from './theme/useTheme';
 
 function Bank() {
   const { visibility } = useVisibility();
+  const currentTheme = useTheme();
 
   setTimeout(() => {
     window.dispatchEvent(
@@ -23,19 +25,22 @@ function Bank() {
   }, 1000);
 
   return (
-    <div>
-      {visibility ? (
-        <Container>
-          <Router>
-            <>
-              <Switch>
-                <Route path='/' exact component={Home} />
-              </Switch>
-            </>
-          </Router>
-        </Container>
-      ) : null}
-    </div>
+    <ThemeProvider theme={currentTheme}>
+      <div>
+        {visibility ? (
+          <Container>
+            <Router>
+              <Header />
+              <>
+                <Switch>
+                  <Route path='/' exact component={Home} />
+                </Switch>
+              </>
+            </Router>
+          </Container>
+        ) : null}
+      </div>
+    </ThemeProvider>
   );
 }
 
