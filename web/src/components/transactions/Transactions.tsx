@@ -41,6 +41,12 @@ setTimeout(() => {
             amount: 3000,
             date: '4/3/2021',
           },
+          {
+            id: 2,
+            type: 'Withdraw',
+            amount: 400,
+            date: '4/3/2021',
+          },
         ],
       },
     }),

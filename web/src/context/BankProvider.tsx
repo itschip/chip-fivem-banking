@@ -1,5 +1,5 @@
 import { useContext, createContext, useState } from 'react';
-import { useNuiEvent } from '../utils/hooks/useNuiEvent';
+import { useNuiEvent } from 'fivem-nui-react-lib';
 import { IBankContext } from '../types/context';
 
 const BankContext = createContext<IBankContext>(undefined);

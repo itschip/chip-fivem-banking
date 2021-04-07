@@ -5,14 +5,17 @@ import Bank from './Bank';
 import reportWebVitals from './reportWebVitals';
 import BankProvider from './context/BankProvider';
 import { SnackbarProvider } from 'notistack';
+import { NuiProvider } from 'fivem-nui-react-lib';
 
 ReactDOM.render(
   <React.StrictMode>
-    <BankProvider>
-      <SnackbarProvider>
-        <Bank />
-      </SnackbarProvider>
-    </BankProvider>
+    <NuiProvider resource='new-bank-who-dis'>
+      <BankProvider>
+        <SnackbarProvider>
+          <Bank />
+        </SnackbarProvider>
+      </BankProvider>
+    </NuiProvider>
   </React.StrictMode>,
   document.getElementById('root'),
 );
