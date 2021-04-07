@@ -7,10 +7,8 @@ import Home from './components/home/components/Home';
 
 // nui stuff
 import { useVisibility } from './context/BankProvider';
-import { useNuiService } from './utils/hooks/useNuiService';
 
 function Bank() {
-  useNuiService();
   const currentTheme = useTheme();
   const { visibility } = useVisibility();
 
