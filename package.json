@@ -16,5 +16,8 @@
       "pre-commit": "pretty-quick --staged"
     }
   },
-  "dependencies": {}
+  "dependencies": {},
+  "scripts": {
+    "prepare": "husky install"
+  }
 }
