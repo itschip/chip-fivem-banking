@@ -3,7 +3,7 @@ export interface Transactions {
   type: TransactionType;
   amount: number;
   date: Date;
-  comment: string;
+  comment?: string;
 }
 
 enum TransactionType {
